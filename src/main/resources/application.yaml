@@ -3,3 +3,7 @@ management:
     web:
       exposure:
         include: health,prometheus
+
+springdoc:
+  default-produces-media-type: application/json
+  show-actuator: true
