@@ -8,7 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import xyz.walk8243.springstudy.model.Hello;
 
-@RestController()
+@RestController
 @RequestMapping("/hello")
 @Tag(name = "Hello", description = "Getting Started")
 public class HelloController {
