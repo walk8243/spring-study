@@ -1,0 +1,32 @@
+html {
+    box-sizing: border-box;
+    overflow: -moz-scrollbars-vertical;
+    overflow-y: scroll;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: inherit;
+}
+
+body {
+    margin: 0;
+    background: #fafafa;
+}
+
+.swagger-ui .info::before {
+    content: "ローカル環境です";
+    display: block;
+    margin: 0 10px 20px;
+    padding: 5px;
+    background-color: antiquewhite;
+    border-radius: 5px;
+    color: crimson;
+    font-size: 2em;
+    text-align: center;
+}
+
+.swagger-ui .scheme-container {
+    display: none;
+}

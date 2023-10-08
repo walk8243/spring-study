@@ -4,21 +4,32 @@ import io.swagger.v3.oas.annotations.Hidden;
 import io.swagger.v3.oas.annotations.Operation;
 import java.io.IOException;
 import java.nio.charset.Charset;
-import org.springframework.beans.factory.annotation.Value;
+import java.util.Objects;
+import lombok.RequiredArgsConstructor;
 import org.springframework.core.io.Resource;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @Hidden
 @RestController
+@RequiredArgsConstructor
 public class SwaggerUiController {
 
-  @Value("classpath:swagger-ui/style.css")
-  private Resource stylesheet;
+  private final Resource swaggerUiStylesheet;
 
-  @GetMapping("/swagger-ui/index.css")
+  @GetMapping(
+      value = "/swagger-ui/index.css",
+      produces = {"text/css"})
   @Operation(summary = "SwaggerUI CSS", description = "SwaggerUIのCSSを上書きする")
-  public String swaggerCss() throws IOException {
-    return stylesheet.getContentAsString(Charset.defaultCharset());
+  public String swaggerCss() {
+    if (Objects.isNull(swaggerUiStylesheet)) {
+      return "";
+    }
+
+    try {
+      return swaggerUiStylesheet.getContentAsString(Charset.defaultCharset());
+    } catch (IOException e) {
+      return "";
+    }
   }
 }
