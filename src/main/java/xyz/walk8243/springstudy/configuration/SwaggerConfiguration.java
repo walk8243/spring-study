@@ -6,12 +6,14 @@ import io.swagger.v3.oas.models.info.Info;
 import io.swagger.v3.oas.models.info.License;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import java.io.IOException;
 import java.util.Objects;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import xyz.walk8243.springstudy.model.constant.Environment;
 
 @Slf4j
@@ -38,7 +40,8 @@ public class SwaggerConfiguration {
   }
 
   @Bean
-  @Nullable public Resource swaggerUiStylesheet(@Nonnull ApplicationContext ctx, @Nullable Environment env) {
+  @Nullable public Resource swaggerUiStylesheet(@Nonnull ApplicationContext ctx, @Nullable Environment env)
+      throws IOException {
     if (Objects.nonNull(env)) {
       final Resource envResource =
           ctx.getResource("classpath:swagger-ui/style_%s.css".formatted(env.getShortName()));
@@ -54,6 +57,13 @@ public class SwaggerConfiguration {
       return baseResource;
     }
 
-    return ctx.getResource("classpath:/META-INF/resources/webjars/swagger-ui/5.2.0/index.css");
+    for (Resource resource :
+        ctx.getResources("classpath:/META-INF/resources/webjars/swagger-ui/*/index.css")) {
+      if (resource.exists()) {
+        log.debug("SwaggerUIのCSSはライブラリのものを使います");
+        return resource;
+      }
+    }
+    return new UrlResource("");
   }
 }

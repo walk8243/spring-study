@@ -21,15 +21,11 @@ public class SwaggerUiController {
       value = "/swagger-ui/index.css",
       produces = {"text/css"})
   @Operation(summary = "SwaggerUI CSS", description = "SwaggerUIのCSSを上書きする")
-  public String swaggerCss() {
-    if (Objects.isNull(swaggerUiStylesheet)) {
+  public String swaggerCss() throws IOException {
+    if (Objects.isNull(swaggerUiStylesheet) || !swaggerUiStylesheet.exists()) {
       return "";
     }
 
-    try {
-      return swaggerUiStylesheet.getContentAsString(Charset.defaultCharset());
-    } catch (IOException e) {
-      return "";
-    }
+    return swaggerUiStylesheet.getContentAsString(Charset.defaultCharset());
   }
 }

@@ -17,7 +17,7 @@
 			"mainClass": "xyz.walk8243.springstudy.SpringStudyApplication",
 			"projectName": "spring-study",
 			"console": "internalConsole",
-			"vmArgs": "-Dspring.profiles.active="
+			"vmArgs": "-Dspring.profiles.active=dev"
 		}
 	]
 }
